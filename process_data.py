@@ -11,22 +11,25 @@ import sys, os.path
 
 def get_data(filename):
     data = pd.read_csv(filename)
+    data['Seed1'] = data['Seed1'].str[1:3]
+    data['Seed2'] = data['Seed2'].str[1:3]
+
     return data
 
 def get_feature_columns():
-    return []
+    return ['Season', 'Seed1', 'Seed2', 'TeamID1', 'TeamID2']
 
 def get_numerical_feature_columns():
-    return []
+    return ['Seed1', 'Seed2']
 
 def get_categorical_feature_columns():
-    return []
+    return ['Season', 'TeamID1', 'TeamID2']
 
 def get_all_feature_columns():
-    return []
+    return get_feature_columns()
 
 def get_label_columns():
-    return ['WTeamID']
+    return ['Result']
 
 def get_column(data, i):
     if False:

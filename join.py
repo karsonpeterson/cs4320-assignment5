@@ -25,4 +25,4 @@ losing_seed = losing_seed.drop(['DayNum', 'WScore', 'LScore', 'WLoc', 'NumOT'], 
 
 all_seed = pd.concat([winning_seed, losing_seed])
 print(all_seed)
-all_seed.to_csv('all_seed.csv', index=False)
+# all_seed.to_csv('all_seed.csv', index=False)

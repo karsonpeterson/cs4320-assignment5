@@ -52,9 +52,9 @@ def make_svm_fit_pipeline():
 def make_bagging_tree_params():
     params = process_data.make_predictor_params()
     bagging_params = {
-        'model__n_estimators' : [10, 20, 40, 80, 100, 120, 140],
-        'model__max_samples' : [0.25, 0.4, 0.5, 0.6, 0.75, 1.0],
-        'model__max_features' : [0.25, 0.4, 0.5, 0.6, 0.75, 1.0],
+        'model__n_estimators' : [10, 20, 40, 80, 100],
+        'model__max_samples' : [0.5, 0.6, 0.75, 1.0],
+        'model__max_features' : [0.5, 0.6, 0.75, 1.0],
         'model__bootstrap' : [True, False],
         'model__bootstrap_features': [True, False]
     }
@@ -94,7 +94,7 @@ def process_args(argv):
     allowed_search_types = ('grid', 'random')
     my_args = {
         'DataFileName' : 'data.csv',
-        'ModelType' : 'tree',
+        'ModelType' : 'bagging-tree',
         'SplitterType' : 'k-fold',
         'SearchType' : 'grid',
         'Folds' : 5,
@@ -182,7 +182,7 @@ def main(argv):
         fit_pipeline = make_bagging_tree_fit_pipeline()
         fit_params = make_bagging_tree_params()
 
-    elif my_args['Modeltype'] == 'adaboost-tree':
+    elif my_args['ModelType'] == 'adaboost-tree':
         fit_pipeline = make_adaboost_tree_fit_pipeline()
         fit_params = make_adaboost_tree_params()
     
@@ -220,16 +220,13 @@ def main(argv):
     print()
     print()
 
-    predicted_labels = search_grid.best_estimator_.predict(data)
-
-    # cm = sklearn.metrics.confusion_matrix(actual_labels, predicted_labels)
-    # print('Confusion Matrix:')
-    # print('T')
+    predicted_labels = search_grid.best_estimator_.predict_proba(data)
 
     print()
-    print('Precision: ', sklearn.metrics.precision_score(actual_labels, predicted_labels))
-    print('Recall: ', sklearn.metrics.recall_score(actual_labels, predicted_labels))
-    print('F1: ', sklearn.metrics.f1_score(actual_labels, predicted_labels))
+    print(predicted_labels)
+    # print('Precision: ', sklearn.metrics.precision_score(actual_labels, predicted_labels))
+    # print('Recall: ', sklearn.metrics.recall_score(actual_labels, predicted_labels))
+    # print('F1: ', sklearn.metrics.f1_score(actual_labels, predicted_labels))
 
     return
 
