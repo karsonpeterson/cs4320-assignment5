@@ -16,6 +16,7 @@ def get_data(filename):
 
     return data
 
+
 def get_feature_columns():
     return ['Season', 'Seed1', 'Seed2', 'TeamID1', 'TeamID2']
 
